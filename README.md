@@ -25,3 +25,7 @@ Add 'pdns' to your INSTALLED_APPS and add a key 'powerdns' to the DATABASES dict
     }
 
 Finally, add pdns.routers.PowerDNSRouter to your DATABASE_ROUTERS list.
+
+### Notes
+
+In the PowerDNS database, the primary key for the supermaster table is a combination of the ip and nameserver fields. Django does not support composite keys, therefore in this app the Supermaster model has it's primary key on the nameserver attribute.
