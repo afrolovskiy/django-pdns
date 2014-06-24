@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from .models import (Cryptokeys, Domainmetadata, Domains, Record,
-                     Supermasters, Tsigkeys)
+from .models import (Cryptokey, Domainmetadata, Domain, Record,
+                     Supermaster, Tsigkey)
 
 
 class RecordAdmin(admin.ModelAdmin):
@@ -9,9 +9,9 @@ class RecordAdmin(admin.ModelAdmin):
     list_filter = ('type',)
 
 
-admin.site.register(Cryptokeys)
+admin.site.register(Cryptokey)
 admin.site.register(Domainmetadata)
-admin.site.register(Domains)
+admin.site.register(Domain)
 admin.site.register(Record, RecordAdmin)
-admin.site.register(Supermasters)
-admin.site.register(Tsigkeys)
+admin.site.register(Supermaster)
+admin.site.register(Tsigkey)

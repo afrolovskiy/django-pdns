@@ -33,8 +33,8 @@ RECORD_TYPE_CHOICES = (
 )
 
 
-class Cryptokeys(models.Model):
-    domain = models.ForeignKey('Domains', blank=True, null=True)
+class Cryptokey(models.Model):
+    domain = models.ForeignKey('Domain', blank=True, null=True)
     flags = models.IntegerField()
     active = models.NullBooleanField()
     content = models.TextField(blank=True)
@@ -46,7 +46,7 @@ class Cryptokeys(models.Model):
 
 
 class Domainmetadata(models.Model):
-    domain = models.ForeignKey('Domains', blank=True, null=True)
+    domain = models.ForeignKey('Domain', blank=True, null=True)
     kind = models.CharField(max_length=16, blank=True)
     content = models.TextField(blank=True)
 
@@ -57,7 +57,7 @@ class Domainmetadata(models.Model):
         verbose_name_plural = 'domain metadata'
 
 
-class Domains(models.Model):
+class Domain(models.Model):
     name = models.CharField(unique=True, max_length=255)
     master = models.CharField(max_length=20, blank=True)
     last_check = models.IntegerField(blank=True, null=True)
@@ -68,14 +68,13 @@ class Domains(models.Model):
     class Meta:
         managed = False
         db_table = 'domains'
-        verbose_name = 'domain'
 
     def __unicode__(self):
         return self.name
 
 
 class Record(models.Model):
-    domain = models.ForeignKey(Domains, blank=True, null=True)
+    domain = models.ForeignKey(Domain, blank=True, null=True)
     name = models.CharField(max_length=255, blank=True)
     type = models.CharField(max_length=10, blank=True,
                             choices=RECORD_TYPE_CHOICES)
@@ -94,7 +93,7 @@ class Record(models.Model):
         return "%s %s %s" % (self.type, self.name, self.content)
 
 
-class Supermasters(models.Model):
+class Supermaster(models.Model):
     ip = models.CharField(max_length=25)
     nameserver = models.CharField(primary_key=True, max_length=255)
     account = models.CharField(max_length=40, blank=True)
@@ -102,7 +101,6 @@ class Supermasters(models.Model):
     class Meta:
         managed = False
         db_table = 'supermasters'
-        verbose_name = 'supermaster'
         unique_together = (
             ('ip', 'nameserver'),
         )
@@ -111,7 +109,7 @@ class Supermasters(models.Model):
         return self.nameserver
 
 
-class Tsigkeys(models.Model):
+class Tsigkey(models.Model):
     name = models.CharField(max_length=255, blank=True)
     algorithm = models.CharField(max_length=255, blank=True)
     secret = models.CharField(max_length=255, blank=True)
